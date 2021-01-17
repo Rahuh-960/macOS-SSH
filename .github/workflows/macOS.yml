@@ -12,8 +12,8 @@ jobs:
 
     env:
       # Change These If You Are Forking The Repo
-      GitHubMail: "rokibhasansagar2014@outlook.com"
-      GitHubName: "rokibhasansagar"
+      GitHubMail: "jainsamyak2002.sj@gmail.com"
+      GitHubName: "Samyak"
 
     steps:
     - name: Set Git Configs & Secrets
@@ -23,29 +23,15 @@ jobs:
         git config --global color.ui true
         git config --global credential.helper store
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-    # Either use ngrok method or tmate method
-    - name: Start SSH via ngrok
-      continue-on-error: true
-      timeout-minutes: 340
+        
+    - name: Start SSH via tmate
       uses: P3TERX/ssh2actions@main
-      with:
-        mode: ngrok
-      env:
-        # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-        NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-        # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
-        NGROK_REGION: us
-        # This password you will use when authorizing via SSH
-        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-        # Send connection info to Telegram (optional)
-        #TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        #TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-    #- name: Start SSH via tmate
-    #  uses: P3TERX/ssh2actions@main
-    #  # Send connection info to Telegram (optional)
+      # Send connection info to Telegram (optional)
     #  env:
     #    TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     #    TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      
+      
     - name: Self Looping
       run: |
         git clone https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} loop
@@ -54,3 +40,22 @@ jobs:
         git add looper.txt
         git commit -m "Looping at $(date -u +%D-%T%P)"
         git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main
+      
+    # Either use ngrok method or tmate method
+    #- name: Start SSH via ngrok
+    #  continue-on-error: true
+    #  timeout-minutes: 340
+    #  uses: P3TERX/ssh2actions@main
+    #  with:
+    #    mode: ngrok
+    #  env:
+        # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+    #    NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+        # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+    #    NGROK_REGION: us
+        # This password you will use when authorizing via SSH
+    #    SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        # Send connection info to Telegram (optional)
+        #TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        #TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
