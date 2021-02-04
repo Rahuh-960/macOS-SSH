@@ -16,6 +16,8 @@ jobs:
       GitHubName: "Samyak"
 
     steps:
+     - name: Checkout
+       uses: actions/checkout@v2
      - name: Android Emulator Runner
        uses: ReactiveCircus/android-emulator-runner@v2.14.3
 
